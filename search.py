@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+from crud import insert_restaurant
 import requests
 import os
 import json
@@ -41,7 +42,7 @@ def search_restaurants():
     budget_level = int(budget)
   except:
     budget_level = 4
-  
+
   url = "https://places.googleapis.com/v1/places:searchText"
 
   payload = {"textQuery": query}
@@ -59,19 +60,32 @@ def search_restaurants():
     raw_price = place.get("priceLevel")
     price_level = PRICE_MAP.get(raw_price, 0)
 
-    
+
     # Filters out places greater than the budget
     if price_level > budget_level:
       continue
 
-    results.append({
-      "place_id": place.get("id"),
+
+    restaurant = {
+      "google_place_id": place.get("id"),
       "name": place.get("displayName", {}).get("text"),
       "address": place.get("formattedAddress"),
-      "price_level": price_level,
+      "price_level": price_level, 
       "rating": place.get("rating")
-    })
-  
+    }
+
+    insert_restaurant(
+      google_place_id=restaurant["google_place_id"],
+      name=restaurant["name"],
+      address=restaurant["address"],
+      price_level=restaurant["price_level"],
+      rating=restaurant["rating"]
+    )
+    results.append(restaurant)
+  return jsonify(results)
+
+
+
   """
   Example call:
   
@@ -89,8 +103,7 @@ def search_restaurants():
     ...
   ]
   """
-  
-  return jsonify(results)
+
 
 if __name__ == "__main__":
   app.run(debug=True)
