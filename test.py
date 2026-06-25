@@ -12,7 +12,7 @@ def test_insert_restaurant(mock_supabase):
     result = insert_restaurant("place_456", "Joe's Pizza", "123 Main St", 2, 4.5)
     assert result["name"] == "Joe's Pizza"
     
-# Testing search.py
+# Testing the search and budget filter
 @patch("search.insert_restaurant")
 @patch("search.requests.post")
 def test_search_by_budget(mock_post, mock_insert):
