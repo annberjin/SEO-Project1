@@ -12,6 +12,15 @@ def test_insert_restaurant(mock_supabase):
     result = insert_restaurant("place_456", "Joe's Pizza", "123 Main St", 2, 4.5)
     assert result["name"] == "Joe's Pizza"
     
+@patch("crud.supabase")
+def test_get_restaurant_by_google_place_id(mock_supabase):
+    mock_supabase.table.return_value.select.return_value.eq.return_value.execute.return_value.data = [
+        {"id": 1, "name": "Joe's Pizza"}
+    ]
+    from crud import get_restaurant_by_google_place_id
+    result = get_restaurant_by_google_place_id("place_123")
+    assert result["name"] == "Joe's Pizza"
+
 # Testing the search and budget filter
 @patch("search.insert_restaurant")
 @patch("search.requests.post")
