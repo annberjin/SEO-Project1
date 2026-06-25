@@ -1,4 +1,5 @@
-# SEO-Project1
+# Restaurant Reviewer
+A Flask web app that helps users discover restaurants and quickly understand their quality by analyzing customer reviews. Users can search for restaurants and instantly receive summaries of common positives, negatives, and contradictions in reviews, along with an analysis of how well those reviews align with the restaurant’s overall rating.
 
 ## Setup Instructions
 
@@ -22,3 +23,16 @@ SUPABASE_URL=your_supabase_url
 SUPABASE_KEY=your_supabase_key
 GEMINI_API_KEY=your_gemini_api_key
 ```
+
+### 4. Running the App
+```bash
+python search.py
+```
+Then open your browser and go to `http://127.0.0.1:5000`.
+
+## Technologies Used
+- Python
+- Flask
+- Supabase
+- Google Places API
+- Gemini AI
