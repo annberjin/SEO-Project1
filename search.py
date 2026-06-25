@@ -88,6 +88,24 @@ def search_restaurants():
 
 @app.route("/analyze")
 def analyze():
+  # place_id = request.args.get("place_id")
+  
+  # if not place_id:
+  #   return "place_id is missing", 400
+  
+  # url = f"https://places.googleapis.com/v1/places/{place_id}"
+  
+  # res = requests.get(url, headers={
+  #   "Content-Type": "application/json",
+  #   "X-Goog-Api-Key": API_KEY,
+  #   "X-Goog-FieldMask": "displayName,reviews.text,reviews.rating,reviews.authorAttribution"
+  # })
+  
+  # if res.status_code != 200:
+  #   return f"Error: {res.text}", 500
+  
+  # data = res.json()
+  
   result = analyze_reviews()
   return render_template("index.html", analysis=result)
   
