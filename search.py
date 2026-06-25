@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
 from crud import insert_restaurant
+from gemini import analyze_reviews
 import requests
 import os
 import json
@@ -28,7 +29,8 @@ PRICE_MAP = {
 
 @app.route("/")
 def home():
-  return jsonify({"message": "API is running"})
+  return render_template("index.html")
+  #return jsonify({"message": "API is running"})
 
 @app.route("/search")
 def search_restaurants():
@@ -82,7 +84,13 @@ def search_restaurants():
       rating=restaurant["rating"]
     )
     results.append(restaurant)
-  return jsonify(results)
+  return render_template("index.html", restaurants=results)
+
+@app.route("/analyze")
+def analyze():
+  result = analyze_reviews()
+  return render_template("index.html", analysis=result)
+  
 
 
 

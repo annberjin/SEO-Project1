@@ -72,6 +72,7 @@ def analyze_reviews(reviews=None):
         "and unreliable, and below 50 means reviews are very contradictory and unreliable. "
         "Format your response as:\n"
         "ANALYSIS: <your analysis>\n"
+        "RED FLAGS: <bullet point list of red flags>\n"
         "RELIABILITY SCORE: <score>%\n"
         "REASONING: <one sentence explanation>\n\n"
         f"{formatted_reviews}" 

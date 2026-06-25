@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Reviewer</title>
+</head>
+<body>
+    <h1>Restaurant Reviewer Analyzer</h1>
+    <p>Search for a restaurant and get an AI powered review analysis to. Avoid the struggle of scrolling through hundreds of reviews in order to determine if it's worth it or not</p>
+
+    <form action = "/search" method="GET">
+        <input type="text" name="query" placeholder="Search restaurants...">
+        <input type="number" name="budget" placeholder="Budget (1-4)" min="1" max="4">       
+        <button type="submit" >Search</button>
+
+    </form>
+
+    <hr>
+
+    <h2>Results</h2>
+    <div id="results">
+        {% if restaurants %}
+            {% for r in restaurants %}
+                <div>
+                    <h3>{{ r.name }}</h3>
+                    <p>{{ r.address }}</p>
+                    <p>Rating: {{ r.rating }} | Price Level: {{ r.price_level }}</p>
+                    <a href="/analyze?place_id={{ r.google_place_id }}">Analyze Reviews</a>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    {% if analysis %}
+        <h2>AI Analysis</h2>
+        <pre>{{ analysis }}</pre>
+    {% endif %}
+
+</body>
+</html>
