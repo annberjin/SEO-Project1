@@ -90,3 +90,48 @@ def fetch_restaurant(query):
         "rating": place.get("rating")
     }
 
+def format_reviews(reviews, restaurant_name):
+    review_parts = []
+    for index, review in enumerate(reviews):
+        line = "Review" + str(index + 1) + " by " + review["author"] + " "
+        line = line + "(posted: " + review["posted_at"] + ", rating: " + str(review["rating"]) + "/5):\n"
+        line = line + review["text"]
+        review_parts.append(line)
+    formatted_reviews = "\n".join(review_parts)
+    return restaurant_name + "Reviews:\n" + formatted_reviews
+
+
+def compare_restaurants(query1, query2):
+    restaurant_1 = fetch_restaurant(query1)
+    restaurant_2 = fetch_restaurant(query2)
+    
+    if not restaurant_1 or not restaurant_2:
+        return "Couldn't fetch one or both of the restaurants"
+    
+    reviews_1 = format_reviews(FAKE_REVIEWS_1, restaurant_1["name"])
+    reviews_2 = format_reviews(FAKE_REVIEWS_2, restaurant_2["name"])
+    
+    prompt = (
+        "You are a restaurant review analyst. "
+        "Compare the following two restaurants based on their reviews. "
+        "Analyze food quality, service, value, and constistency of reviews. "
+        "Pay attention to wether negative reviews appear more on weekends "
+        "or busy periods for either restaurant. "
+        "Your response should be formatted as following:\n"
+        "RESTAURANT 1: " + restaurant_1["name"] + "\n"
+        "RESTAURANT 2: " + restaurant_2["name"] + "\n"
+        "FOOD: <comparison>\n"
+        "SERVICE: <comparison>\n"
+        "VALUE: <comparion>\n"
+        "RELIABILITY SCORE 1: <score>%\n"
+        "RELIABILITY SCORE 2: <score>%\n"
+        "WINNER: <restaurant name>\n"
+        "REASONING: <two sentence explanation>\n\n"
+        + reviews_1 + "\n\n" + reviews_2
+    )
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents=prompt
+    )
+    return response.text
