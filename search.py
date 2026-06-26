@@ -14,18 +14,18 @@ app = Flask(__name__)
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
 HEADERS = {
-  "Content-Type": "application/json",
-  "X-Goog-Api-Key": API_KEY,
-  "X-Goog-FieldMask": "places.id,places.displayName,places.formattedAddress,places.rating,places.priceLevel"
+    "Content-Type": "application/json",
+    "X-Goog-Api-Key": API_KEY,
+    "X-Goog-FieldMask": "places.id,places.displayName,places.formattedAddress,places.rating,places.priceLevel"
 }
 
 # The keys are the values the Place API sends back
 # Map the keys to an integer
 PRICE_MAP = {
-  "PRICE_LEVEL_INEXPENSIVE": 1,
-  "PRICE_LEVEL_MODERATE": 2,
-  "PRICE_LEVEL_EXPENSIVE": 3,
-  "PRICE_LEVEL_VERY_EXPENSIVE": 4
+    "PRICE_LEVEL_INEXPENSIVE": 1,
+    "PRICE_LEVEL_MODERATE": 2,
+    "PRICE_LEVEL_EXPENSIVE": 3,
+    "PRICE_LEVEL_VERY_EXPENSIVE": 4
 }
 
 @app.route("/")
