@@ -75,7 +75,7 @@ def fetch_restaurant(query):
     response = requests.post(url, headers=HEADERS, data=json.dumps(payload))
     if response.status_code != 200:
         return None
-    places = response.json().get("priceLevel")
+    places = response.json().get("places", [])
     if not places:
         return None
 
