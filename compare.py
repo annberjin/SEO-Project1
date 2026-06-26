@@ -1,9 +1,8 @@
-from flask import Flask, request, jsonify, render_template
-from dotenv import load_dotenv
-from google import genai
-import requests
 import os
 import json
+import requests
+from dotenv import load_dotenv
+from google import genai
 
 load_dotenv()
 
@@ -73,7 +72,7 @@ FAKE_REVIEWS_2 = [
 def fetch_restaurant(query):
     url = "https://places.googleapis.com/v1/places:searchText"
     payload = {"textQuery": query}
-    response = request.post(url, headers=HEADERS, data=json.dumps(payload))
+    response = requests.post(url, headers=HEADERS, data=json.dumps(payload))
     if response.status_code != 200:
         return None
     places = response.json().get("priceLevel")

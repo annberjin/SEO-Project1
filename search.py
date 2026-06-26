@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
 from crud import insert_restaurant
 from gemini import analyze_reviews
+from compare import compare_restaurants
 import requests
 import os
 import json
@@ -109,6 +110,13 @@ def analyze():
   result = analyze_reviews()
   return render_template("index.html", analysis=result)
   
+
+@app.route("/compare")
+def comparison():
+  query1 = request.args.get("query1")
+  query2 = request.args.get("query2")
+  result = compare_restaurants(query1, query2)
+  return render_template("index.html", comparison=result)
 
 
 

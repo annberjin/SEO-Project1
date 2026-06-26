@@ -36,5 +36,18 @@
         <pre>{{ analysis }}</pre>
     {% endif %}
 
+    <hr>
+    <h2> Compare two restaurants</h2>
+    <form action="/compare" method="GET">
+        <input type="text" name="query1" placeholder="First restaurant...">
+        <input type="text" name="query2" placeholder="Second restaurant...">
+        <button type="submit">Compare</button>
+    </form>
+    {% if comparison %}
+        <h2>Comparison Result</h2>
+        <pre>{{ comparison }}</pre>
+    {% endif %}
+
+
 </body>
 </html>
